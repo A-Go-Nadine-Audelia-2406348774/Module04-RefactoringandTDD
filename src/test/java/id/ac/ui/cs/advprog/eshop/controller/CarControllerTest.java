@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -42,7 +43,7 @@ class CarControllerTest {
     void testCreateCarPage() throws Exception {
         mockMvc.perform(get("/car/createCar"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("CreateCar"))
+                .andExpect(view().name("CreateCar")) 
                 .andExpect(model().attributeExists("car"));
     }
 
@@ -51,7 +52,7 @@ class CarControllerTest {
         mockMvc.perform(post("/car/createCar")
                         .flashAttr("car", car))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("CarList"));
+                .andExpect(redirectedUrl("listCar")); 
 
         verify(carService, times(1)).create(any(Car.class));
     }
@@ -63,7 +64,7 @@ class CarControllerTest {
 
         mockMvc.perform(get("/car/listCar"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("CarList"))
+                .andExpect(view().name("CarList")) 
                 .andExpect(model().attribute("cars", allCars));
 
         verify(carService, times(1)).findAll();
@@ -75,7 +76,7 @@ class CarControllerTest {
 
         mockMvc.perform(get("/car/editCar/8774-id"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("EditCar"))
+                .andExpect(view().name("EditCar")) 
                 .andExpect(model().attribute("car", car));
 
         verify(carService, times(1)).findById("8774-id");
@@ -83,10 +84,12 @@ class CarControllerTest {
 
     @Test
     void testEditCarPost() throws Exception {
+        when(carService.update(anyString(), any(Car.class))).thenReturn(car);
+
         mockMvc.perform(post("/car/editCar")
                         .flashAttr("car", car))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("CarList"));
+                .andExpect(redirectedUrl("listCar"));
 
         verify(carService, times(1)).update(eq("8774-id"), any(Car.class));
     }
@@ -96,7 +99,7 @@ class CarControllerTest {
         mockMvc.perform(post("/car/deleteCar")
                         .param("carId", "8774-id"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("CarList"));
+                .andExpect(redirectedUrl("listCar"));
 
         verify(carService, times(1)).deleteCarById("8774-id");
     }
