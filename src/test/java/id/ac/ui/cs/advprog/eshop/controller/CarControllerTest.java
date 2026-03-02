@@ -42,7 +42,7 @@ class CarControllerTest {
     void testCreateCarPage() throws Exception {
         mockMvc.perform(get("/car/createCar"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("createCar"))
+                .andExpect(view().name("CreateCar"))
                 .andExpect(model().attributeExists("car"));
     }
 
@@ -51,7 +51,7 @@ class CarControllerTest {
         mockMvc.perform(post("/car/createCar")
                         .flashAttr("car", car))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("listCar"));
+                .andExpect(redirectedUrl("CarList"));
 
         verify(carService, times(1)).create(any(Car.class));
     }
@@ -63,7 +63,7 @@ class CarControllerTest {
 
         mockMvc.perform(get("/car/listCar"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("carList"))
+                .andExpect(view().name("CarList"))
                 .andExpect(model().attribute("cars", allCars));
 
         verify(carService, times(1)).findAll();
@@ -75,7 +75,7 @@ class CarControllerTest {
 
         mockMvc.perform(get("/car/editCar/8774-id"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("editCar"))
+                .andExpect(view().name("EditCar"))
                 .andExpect(model().attribute("car", car));
 
         verify(carService, times(1)).findById("8774-id");
@@ -86,7 +86,7 @@ class CarControllerTest {
         mockMvc.perform(post("/car/editCar")
                         .flashAttr("car", car))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("listCar"));
+                .andExpect(redirectedUrl("CarList"));
 
         verify(carService, times(1)).update(eq("8774-id"), any(Car.class));
     }
@@ -96,7 +96,7 @@ class CarControllerTest {
         mockMvc.perform(post("/car/deleteCar")
                         .param("carId", "8774-id"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("listCar"));
+                .andExpect(redirectedUrl("CarList"));
 
         verify(carService, times(1)).deleteCarById("8774-id");
     }
