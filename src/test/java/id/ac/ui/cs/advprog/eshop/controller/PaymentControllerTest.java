@@ -34,7 +34,14 @@ class PaymentControllerTest {
 
     @BeforeEach
     void setUp() {
-        Order mockOrder = new Order("order-1", new ArrayList<>(), 1708560000L, "Nadine");
+        List<id.ac.ui.cs.advprog.eshop.model.Product> products = new ArrayList<>();
+        id.ac.ui.cs.advprog.eshop.model.Product dummyProduct = new id.ac.ui.cs.advprog.eshop.model.Product();
+        dummyProduct.setProductId("p1");
+        dummyProduct.setProductName("Dummy");
+        dummyProduct.setProductQuantity(1);
+        products.add(dummyProduct);
+
+        Order mockOrder = new Order("order-1", products, 1708560000L, "Nadine");
         mockPayment = new Payment("pay-1", mockOrder, "BANK_TRANSFER", new HashMap<>());
         mockPaymentList = new ArrayList<>();
         mockPaymentList.add(mockPayment);

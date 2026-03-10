@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><title>Find Payment</title></head>
+<body>
+    <h2>Find Payment Details</h2>
+    <input type="text" id="paymentId" placeholder="Enter Payment ID">
+    <button onclick="window.location.href='/payment/detail/' + document.getElementById('paymentId').value">Search</button>
+</body>
+</html>
