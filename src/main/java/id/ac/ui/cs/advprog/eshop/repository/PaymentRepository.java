@@ -25,12 +25,10 @@ public class PaymentRepository {
     }
 
     public Payment findById(String id) {
-        for (Payment savedPayment : paymentData) {
-            if (savedPayment.getId().equals(id)) {
-                return savedPayment;
-            }
-        }
-        return null;
+        return paymentData.stream()
+                .filter(payment -> payment.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Payment> findAll() {
