@@ -17,6 +17,10 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private PaymentRepository paymentRepository;
 
+    // CONSTANT VALUES
+    private static final String STATUS_SUCCESS = "SUCCESS";
+    private static final String STATUS_REJECTED = "REJECTED";
+
     @Override
     public Payment addPayment(Order order, String method, Map<String, String> paymentData) {
         Payment payment = new Payment(UUID.randomUUID().toString(), order, method, paymentData);
@@ -26,9 +30,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment setStatus(Payment payment, String status) {
         payment.setStatus(status);
-        if ("SUCCESS".equals(status)) {
+        if (STATUS_SUCCESS.equals(status)) {
             payment.getOrder().setStatus(OrderStatus.SUCCESS.getValue());
-        } else if ("REJECTED".equals(status)) {
+        } else if (STATUS_REJECTED.equals(status)) {
             payment.getOrder().setStatus(OrderStatus.FAILED.getValue());
         } else {
             throw new IllegalArgumentException("Invalid payment status");

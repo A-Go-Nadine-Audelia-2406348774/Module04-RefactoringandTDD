@@ -57,16 +57,35 @@ public class OrderController {
         return "order/PaymentResult";
     }
 
+
+    // Refactor code supaya tanggung jawab tidak banyak - Neal Guarddin
     @PostMapping("/create")
     public String createOrderPost(@RequestParam String author, Model model) {
+        Order newOrder = buildDummyOrder(author);
+        orderService.createOrder(newOrder);
+        return showOrderHistory(author, model);
+    }
+
+    private Order buildDummyOrder(String author) {
         List<Product> products = new ArrayList<>();
         Product dummy = new Product();
         dummy.setProductId("p-dummy");
         dummy.setProductName("Product Demo");
         dummy.setProductQuantity(1);
         products.add(dummy);
-        Order newOrder = new Order(java.util.UUID.randomUUID().toString(), products, System.currentTimeMillis(), author);
-        orderService.createOrder(newOrder);
-        return historyOrderPost(author, model);
+
+        return new Order(
+                java.util.UUID.randomUUID().toString(),
+                products,
+                System.currentTimeMillis(),
+                author
+        );
+    }
+
+    private String showOrderHistory(String author, Model model) {
+        List<Order> orders = orderService.findAllByAuthor(author);
+        model.addAttribute("orders", orders);
+        model.addAttribute("author", author);
+        return "order/ListOrder";
     }
 }
