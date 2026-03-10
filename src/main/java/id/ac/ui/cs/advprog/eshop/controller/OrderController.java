@@ -33,4 +33,25 @@ public class OrderController {
         model.addAttribute("author", author);
         return "order/ListOrder";
     }
+
+    @Autowired
+    private id.ac.ui.cs.advprog.eshop.service.PaymentService paymentService;
+
+    @GetMapping("/pay/{orderId}")
+    public String payOrderPage(@PathVariable String orderId, Model model) {
+        Order order = orderService.findById(orderId);
+        model.addAttribute("order", order);
+        return "order/PaymentOrder";
+    }
+
+    @PostMapping("/pay/{orderId}")
+    public String payOrderPost(@PathVariable String orderId, 
+                               @RequestParam String method, 
+                               @RequestParam java.util.Map<String, String> allParams, 
+                               Model model) {
+        Order order = orderService.findById(orderId);
+        id.ac.ui.cs.advprog.eshop.model.Payment payment = paymentService.addPayment(order, method, allParams);
+        model.addAttribute("payment", payment);
+        return "order/PaymentResult";
+    }
 }
