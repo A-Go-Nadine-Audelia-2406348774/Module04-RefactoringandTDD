@@ -3,7 +3,7 @@ package id.ac.ui.cs.advprog.eshop.controller;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.service.OrderService;
-import id.ac.ui.cs.advprog.eshop.service.PaymentService; // Jangan lupa import ini
+import id.ac.ui.cs.advprog.eshop.service.PaymentService; 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import id.ac.ui.cs.advprog.eshop.model.Payment; // Tambahkan ini di bagian atas file
-import static org.mockito.ArgumentMatchers.any; // Tambahkan ini di bagian atas file
-import static org.mockito.ArgumentMatchers.eq; // Tambahkan ini di bagian atas file
+import id.ac.ui.cs.advprog.eshop.model.Payment; 
+import static org.mockito.ArgumentMatchers.any; 
+import static org.mockito.ArgumentMatchers.eq; 
 import java.util.HashMap;
 
 @WebMvcTest(controllers = OrderController.class)
@@ -97,5 +97,19 @@ class OrderControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("order/PaymentResult"))
                 .andExpect(model().attributeExists("payment"));
+    }
+
+    @Test
+    void testCreateOrderPost() throws Exception {
+        String author = "Nadine";
+        when(orderService.findAllByAuthor(author)).thenReturn(mockOrders);
+        mockMvc.perform(post("/order/create")
+                .param("author", author))
+                .andExpect(status().isOk())
+                .andExpect(view().name("order/ListOrder"))
+                .andExpect(model().attributeExists("orders"))
+                .andExpect(model().attributeExists("author"))
+                .andExpect(model().attribute("author", author));
+        org.mockito.Mockito.verify(orderService, org.mockito.Mockito.times(1)).createOrder(any(Order.class));
     }
 }
