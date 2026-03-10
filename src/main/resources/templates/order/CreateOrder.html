@@ -1,8 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head><title>Create Order</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Order</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .card-header { background-color: #007bff; color: white; border-radius: 15px 15px 0 0 !important; }
+    </style>
+</head>
 <body>
-    <h2>Create New Order</h2>
-    <p>Pembuatan order</p>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3 class="mb-0">New Order</h3>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted text-center">Please enter your name to initiate a new purchase order.</p>
+                    <hr>
+                    <form th:action="@{/order/create}" method="post">
+                        <div class="form-group">
+                            <label for="authorInput" class="font-weight-bold">Customer Name</label>
+                            <input type="text" 
+                                   name="author" 
+                                   class="form-control form-control-lg" 
+                                   id="authorInput" 
+                                   placeholder="Enter your name" 
+                                   required 
+                                   autofocus>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary btn-block btn-lg">Place Order</button>
+                            <a th:href="@{/}" class="btn btn-outline-secondary btn-block">Back to Home</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

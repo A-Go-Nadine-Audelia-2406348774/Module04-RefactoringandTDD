@@ -31,9 +31,12 @@ class CreateProductFunctionalTest {
     void createProduct_isSuccess(ChromeDriver driver) throws Exception {
         driver.get(baseUrl + "/product/create");
         driver.findElement(By.id("nameInput")).sendKeys("Sampo Cap Usep");
-        driver.findElement(By.id("quantityInput")).clear(); 
-        driver.findElement(By.id("quantityInput")).sendKeys("50");
+        WebElement quantityInput = driver.findElement(By.id("quantityInput"));
+        quantityInput.clear();
+        quantityInput.sendKeys("10"); 
         driver.findElement(By.cssSelector("button[type='submit']")).click();
+        new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(2))
+                .until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("/product/list"));
         String currentUrl = driver.getCurrentUrl();
         assertEquals(baseUrl + "/product/list", currentUrl);
         WebElement productNameInList = driver.findElement(By.xpath("//table//td[text()='Sampo Cap Usep']"));

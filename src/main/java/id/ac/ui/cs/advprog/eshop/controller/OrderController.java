@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import id.ac.ui.cs.advprog.eshop.model.Product;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -53,5 +55,18 @@ public class OrderController {
         id.ac.ui.cs.advprog.eshop.model.Payment payment = paymentService.addPayment(order, method, allParams);
         model.addAttribute("payment", payment);
         return "order/PaymentResult";
+    }
+
+    @PostMapping("/create")
+    public String createOrderPost(@RequestParam String author, Model model) {
+        List<Product> products = new ArrayList<>();
+        Product dummy = new Product();
+        dummy.setProductId("p-dummy");
+        dummy.setProductName("Product Demo");
+        dummy.setProductQuantity(1);
+        products.add(dummy);
+        Order newOrder = new Order(java.util.UUID.randomUUID().toString(), products, System.currentTimeMillis(), author);
+        orderService.createOrder(newOrder);
+        return historyOrderPost(author, model);
     }
 }
