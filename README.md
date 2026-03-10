@@ -14,8 +14,10 @@ Self-Validating: Test menggunakan assertions seperti assertEquals, assertNull, d
 Thorough/Timely: Test mencakup happy path dan unhappy path. Test juga dibuat tepat waktu sesuai dengan kaidah TDD.
 Untuk langkah selanjutnya, saya akan terus konsisten menerapkan mocking untuk menjaga kecepatan dan memastikan cakupan tes mencakup lebih banyak variasi.
 
-## REFLEKSI BONUS 2
 
+## REFLEKSI BONUS 2
+Nama = Neal Guarddin\
+NPM = 2406348282
 ### 1. Apa pendapat saya tentang kode pasangan saya? Apakah masih ada aspek yang kurang?
 
 Secara umum, kode pasangan saya sudah berjalan dengan baik dan fitur utama seperti order dan payment sudah berhasil diimplementasikan. Struktur project juga sudah cukup jelas karena dipisahkan ke dalam layer controller, service, repository, dan model. Namun, setelah saya review, masih ada beberapa aspek maintainability yang bisa ditingkatkan.
