@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Result</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-4">
+    <div class="alert alert-success">
+        <h4 class="alert-heading">Payment Created!</h4>
+        <p>Your Payment ID is: <strong th:text="${payment.id}"></strong></p>
+        <hr>
+        <p class="mb-0">Current Status: <strong th:text="${payment.status}"></strong></p>
+    </div>
+    <a th:href="@{/payment/detail}" class="btn btn-primary">Check Payment Details</a>
+</div>
+</body>
+</html>
