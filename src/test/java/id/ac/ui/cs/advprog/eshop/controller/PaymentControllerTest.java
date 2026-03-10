@@ -93,4 +93,14 @@ class PaymentControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/payment/admin/list"));
     }
+
+    @Test
+    void testAdminSetPaymentStatusPostIfPaymentNotFound() throws Exception {
+        when(paymentService.getPayment("invalid-id")).thenReturn(null);
+        mockMvc.perform(post("/payment/admin/set-status/invalid-id")
+                .param("status", "SUCCESS"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/payment/admin/list"));
+
+    }
 }
